@@ -6,6 +6,9 @@ typedef struct n{
 	n* next;
 }node;
 
+void printNode(node *);
+void addNode(node *);
+
 int main(){
 	node* root;
 	root=(node*)malloc(sizeof(node));
@@ -14,5 +17,50 @@ int main(){
 	root->next->data=5;
 	root->next->next=(node*)malloc(sizeof(node));
 	root->next->next->data=6;
+	root->next->next->next=NULL;
 	printf("%d \n%d \n%d",root->data,root->next->data,root->next->next->data);
+	node* iter;
+	iter=root;
+	printf("\n%d",iter->data);
+	iter=iter->next;
+	printf("\n%d",iter->data);
+	iter=root;
+	
+	while(iter->next!=NULL){
+		printf("\na %d",iter->data);
+		iter=iter->next;
+		
+	}
+	
+	for(int i=0;i<5;i++){
+		iter->next=(node*)malloc(sizeof(node));
+		iter=iter->next;
+		iter->data=i*2;
+		iter->next=NULL;
+	}
+	addNode(root);
+	printNode(root);
+
+}
+
+void printNode(node * root){
+	int i=1;
+	while(root!=NULL){
+	
+		printf("\n%d-%d",i,root->data);
+		root=root->next;
+		i++;
+	}
+}
+
+void addNode(node * root){
+	while(root->next!=NULL){
+		root=root->next;
+	}
+	for(int i=0;i<5;i++){
+		root->next=(node*)malloc(sizeof(node));
+		root=root->next;
+		root->data=i*2;
+		root->next=NULL;
+	}
 }
