@@ -8,6 +8,8 @@ typedef struct n{
 
 void printNode(node *);
 void addNode(node *);
+void addSelectively(node *,int,int);
+
 
 int main(){
 	node* root;
@@ -39,6 +41,8 @@ int main(){
 		iter->next=NULL;
 	}
 	addNode(root);
+	//printNode(root);
+	addSelectively(root,8,3);
 	printNode(root);
 
 }
@@ -64,3 +68,17 @@ void addNode(node * root){
 		root->next=NULL;
 	}
 }
+
+void addSelectively(node * root,int listElement,int newData){
+	while(root->next->data!=listElement){
+		root=root->next;
+	}
+	node *temp;
+	temp=(node*)malloc(sizeof(node));
+	temp=root->next;
+	root->next=(node*)malloc(sizeof(node));
+	root->next->data=newData;
+	root->next->next=temp;
+}
+
+
