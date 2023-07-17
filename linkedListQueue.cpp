@@ -6,69 +6,67 @@ typedef struct n{
 	n *next;
 }node;
 
-void addDataQueue(node *,int);
+void addDataQueue(node **,int);
 void printData(node *);
 
 
 int main(){
-	node *root=NULL;	
-	addDataQueue(root,4);
-	addDataQueue(root,3);
-	addDataQueue(root,6);
-	addDataQueue(root,8);
-	addDataQueue(root,5);
-	addDataQueue(root,7);
-	addDataQueue(root,2);
-	addDataQueue(root,19);
-	addDataQueue(root,13);
-	printf("test1");
+	node *root=NULL;
+	addDataQueue(&root,45);
+	addDataQueue(&root,30);
+	addDataQueue(&root,67);
+	addDataQueue(&root,84);
+	addDataQueue(&root,56);
+	addDataQueue(&root,73);
+	addDataQueue(&root,21);
+	addDataQueue(&root,19);
+	addDataQueue(&root,13);
+	addDataQueue(&root,15);
+	addDataQueue(&root,20);
+	addDataQueue(&root,12);
+	addDataQueue(&root,19);
 	printData(root);
 	return 0;
 }
 
-void addDataQueue(node * root,int data){
-	if(root==NULL){ 
-		printf("test2");
-		root=(node*)malloc(sizeof(node));
-		root->data=data;
-		root->next=NULL;
-				
+void addDataQueue(node ** root,int data){
+	if(*root==NULL){ 
+		*root=(node*)malloc(sizeof(node));
+		(*root)->next=NULL;
+		(*root)->data=data;				
 	}
 	
-	else if(root->next==NULL){
-		if(root->data>data){
-			node *temp=(node*)malloc(sizeof(node));
-			temp=root;
-			root->data=data;
-			root->next=temp;
+	else if((*root)->next==NULL){
+		if((*root)->data>data){
+			node *temp= *root;
+			*root=(node*)malloc(sizeof(node));
+			(*root)->data=data;
+			(*root)->next=temp;
 		}
-		root->next=(node*)malloc(sizeof(node));
-		root->next->data=data;
-		root->next->next=NULL;
+		else{
+			(*root)->next=(node*)malloc(sizeof(node));
+		(*root)->next->data=data;
+		(*root)->next->next=NULL;
+		}
+		
 	}
 	
-	else if(root->data>data){
-		node *temp=(node*)malloc(sizeof(node));
-		temp=root;
-		root->data=data;
-		root->next=temp;
+	else if((*root)->data>data){
+		node *temp= *root;
+		*root=(node*)malloc(sizeof(node));
+		(*root)->data=data;
+		(*root)->next=temp;
 	}
 	
 	else{
-		while(root->next->data<data){
-			root=root->next;
+		node* current = *root;
+		while (current->next != NULL && current->next->data < data) {
+			current = current->next;
 		}
-		if(root->next=NULL){
-			root->next=(node*)malloc(sizeof(node));
-			root->next->data=data;
-			root->next->next=NULL;
-		}
-		else if(root->next!=NULL){
-			node *temp=(node*)malloc(sizeof(node));
-			temp=root->next;
-			root->next->data=data;
-			root->next->next=temp;
-		}
+		node* newNode = (node*)malloc(sizeof(node));
+		newNode->data = data;
+		newNode->next = current->next;
+		current->next = newNode;
 	}
 }
 
@@ -76,7 +74,7 @@ void addDataQueue(node * root,int data){
 void printData(node * root){
 	int i=1;
 	while(root!=NULL){
-		printf("%d-%d",i,root->data);
+		printf("%d-%d\n",i,root->data);
 		root=root->next;
 		i++;
 	}
