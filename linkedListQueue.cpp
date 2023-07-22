@@ -104,7 +104,7 @@ void deleteData(node **root , int data){
 			iter=iter->next;
 		}
 		if(iter->next->next==NULL&&iter->next->data!=data){
-			printf("data isn't found in the node\n");
+			printf("data=%d isn't found in the node\n",data);
 		}
 		else if(iter->next->next==NULL&&iter->next->data==data){
 			free(iter->next);
